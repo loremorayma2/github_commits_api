@@ -4,12 +4,13 @@ import os
 import json
 from django.core.cache import cache 
 from .models import Commit
-from django.views.decorators.csrf import csrf_exempt
 
-@csrf_exempt
 def post_commits(request):
     if request.method == 'POST':
-        data = json.loads(request.body)
+        try:
+            data = json.loads(request.body)
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON or empty payload"}, status=400)
         owner = data.get('owner')
         repo = data.get('repo')
 
