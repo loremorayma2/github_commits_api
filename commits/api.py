@@ -34,14 +34,14 @@ def post_commits(request):
             "Authorization": f"token {token}"
         }
         response = requests.post(endpoint, headers=headers, json=data)
-        if response.status_code==404:
-            return JsonResponse({"error":"Not Found"}, safe=False)
-        if response.status_code==500:
-            return JsonResponse({"error":"Server error"}, safe=False)
-        if response.status_code==400:
-            return JsonResponse({"error":"Bad Request "}, safe=False)
+        if response.status_code == 404:
+            return JsonResponse({"error": "Not Found"}, safe=False)
+        elif response.status_code == 500:
+            return JsonResponse({"error": "Server error"}, safe=False)
+        elif response.status_code == 400:
+            return JsonResponse({"error": "Bad Request"}, safe=False)
         
-        if response.status_code == 200:
+        elif response.status_code == 200:
             commits_data = response.json()
             for commit_data in commits_data:
                 sha = commit_data.get('sha')
@@ -58,3 +58,6 @@ def post_commits(request):
 
             cache.set(cache_key, commits_data, timeout=900)
             return JsonResponse(commits_data, safe=False)
+        else:
+
+            return JsonResponse({"error": f"Unexpected response status: {response.status_code}"}, status=response.status_code)
