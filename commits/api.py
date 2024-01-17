@@ -3,6 +3,7 @@ from django.http import JsonResponse
 import os
 import json
 from django.core.cache import cache 
+from .models import Commit
 
 def post_commits(request):
     if request.method == 'POST':
@@ -39,6 +40,21 @@ def post_commits(request):
             return JsonResponse({"error":"Server error"}, safe=False)
         if response.status_code==400:
             return JsonResponse({"error":"Bad Request "}, safe=False)
+        
         if response.status_code == 200:
-            commits = response.json()
-            return JsonResponse(commits, safe=False)  
+            commits_data = response.json()
+            for commit_data in commits_data:
+                sha = commit_data.get('sha')
+                commit_info = commit_data.get('commit', {})
+                message = commit_info.get('message', '')
+
+                commit, created = Commit.objects.update_or_create(
+                    sha=sha,
+                    defaults={
+                        'message': message,
+                        'repo_name': repo 
+                    }
+                )
+
+            cache.set(cache_key, commits_data, timeout=900)
+            return JsonResponse(commits_data, safe=False)
