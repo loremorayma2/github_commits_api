@@ -4,7 +4,9 @@ import os
 import json
 from django.core.cache import cache 
 from .models import Commit
+from django.views.decorators.csrf import csrf_exempt
 
+@csrf_exempt
 def post_commits(request):
     if request.method == 'POST':
         try:
