@@ -2,6 +2,7 @@ import requests
 from django.http import JsonResponse
 import os
 import json
+from django.core.cache import cache 
 
 def post_commits(request):
     if request.method == 'POST':
@@ -11,6 +12,12 @@ def post_commits(request):
 
         if not owner or not repo:
             return JsonResponse({"error": "Missing 'owner' or 'repo' in request data."}, status=400)
+        
+        cache_key = f'commits-{owner}-{repo}'
+        cached_response = cache.get(cache_key)
+
+        if cached_response is not None:
+            return JsonResponse(cached_response, safe=False)
 
         url_root = os.getenv('GITHUB_URL')
         token = os.getenv('GITHUB_ACCESS_TOKEN')

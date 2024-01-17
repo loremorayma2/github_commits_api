@@ -1,6 +1,6 @@
 from django.urls import path
-from .api import get_commits
+from .api import post_commits
 
 urlpatterns = [
-    path('commits/', get_commits, name='get_commits'),
+    path('commits/', post_commits, name='get_commits'),
 ]
