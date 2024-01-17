@@ -37,3 +37,6 @@ class Commit(models.Model):
 
     def __str__(self):
         return self.id_commit
+    
+    class Meta():
+        db_table="commit"
