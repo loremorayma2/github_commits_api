@@ -46,7 +46,7 @@ CORS_ALLOWED_ORIGINS = [
     'https://githubcommits.up.railway.app'
 ]
 CSRF_TRUSTED_ORIGINS = [
-    'https://githubcommits.up.railway.app'
+    'https://githubcommits.up.railway.app/'
 ]
 
 CACHES = {
