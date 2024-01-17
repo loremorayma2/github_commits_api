@@ -19,11 +19,6 @@ def post_commits(request):
         if not owner or not repo:
             return JsonResponse({"error": "Missing 'owner' or 'repo' in request data."}, status=400)
         
-        if not owner =="loremorayma2":
-            return JsonResponse({"error": "User not allowed."}, status=400)
-        
-        if not repo=="github_commits_api" or not repo=="github_commits":
-            return JsonResponse({"error": "Commits not allowed."}, status=400)
         
         cache_key = f'commits-{owner}-{repo}'
         cached_response = cache.get(cache_key)
