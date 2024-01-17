@@ -23,7 +23,7 @@ def post_commits(request):
             return JsonResponse({"error": "User not allowed."}, status=400)
         
         if repo!="github_commits_api" or repo!="github_commits":
-            return JsonResponse({"error": "Repos not allowed."}, status=400)
+            return JsonResponse({"error": "Commits not allowed."}, status=400)
         
         cache_key = f'commits-{owner}-{repo}'
         cached_response = cache.get(cache_key)
