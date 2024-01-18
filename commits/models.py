@@ -1,6 +1,7 @@
 from django.db import models
 import uuid
 import shortuuid
+from django.utils import timezone
 
 def conver_encode():
     u = uuid.uuid4()
@@ -14,6 +15,7 @@ class Commit(models.Model):
     message = models.TextField(null=True) 
     repo_name = models.CharField(max_length=100,null=True)
     author = models.CharField(max_length=200, null=True)
+    created_at = models.DateTimeField(default=timezone.now) 
 
     def __str__(self):
         return f"{self.repo_name} - {self.sha} - {self.author}"
