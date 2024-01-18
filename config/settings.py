@@ -15,7 +15,7 @@ SECRET_KEY = 'django-insecure-6we^xj*t%0afi@l$ve!qhrn#s^^du214462jhk0n691#=b$jva
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["githubcommits.up.railway.app"]
+ALLOWED_HOSTS = ["localhost","githubcommits.up.railway.app"]
 
 
 # Application definition
@@ -43,9 +43,11 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
+    'http://localhost:8000',
     'https://githubcommits.up.railway.app'
 ]
 CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:8000',
     'https://githubcommits.up.railway.app/'
 ]
 
