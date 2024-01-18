@@ -98,7 +98,7 @@ def get_commits(request):
         if isinstance(repo_response, JsonResponse):  
             return repo_response  
 
-        commits = Commit.objects.all()
+        commits = Commit.objects.all().order_by('-created_at')
         serializer = CommitSerializer(commits, many=True)
         cache.set(cache_key, serializer.data, cache_time)
         data_to_return = serializer.data  
